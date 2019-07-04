@@ -6,14 +6,6 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-<<<<<<< HEAD
-                    <div class="d-flex align-items-center">
-                        <h2>All Questions</h2>
-                        <div class="ml-auto">
-                            <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Ask Question</a>
-                        </div>
-                    </div>
-=======
                     <div class="d-flex">
                         <h2>All Questions</h2>
                         <div class="ml-auto">
@@ -21,7 +13,6 @@
                         </div>
                     </div>
 
->>>>>>> adding_more_info
                 </div>
 
                 <div class="card-body">
@@ -40,9 +31,6 @@
                                 </div>
                            </div>
                            <div class="media-body">
-<<<<<<< HEAD
-                               <h3 class="mt-0" href="{{ $question->url }}">{{ $question->title }}</h3>
-=======
                                <div class="d-flex align-items-center">
                                     <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                     <div class="ml-auto">
@@ -60,7 +48,6 @@
 
                                     </div>
                                </div>
->>>>>>> adding_more_info
                                <p class="lead">
                                    Asked by <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
                                    <small class="text-muted">{{ $question->created_date }}</small>

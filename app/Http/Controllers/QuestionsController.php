@@ -33,13 +33,8 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-<<<<<<< HEAD
-
-        $question = new Question();
-=======
         $question = new Question();
 
->>>>>>> adding_more_info
         return view('questions.create', compact('question'));
     }
 
