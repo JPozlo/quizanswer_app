@@ -6,15 +6,26 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
+<<<<<<< HEAD
                     <div class="d-flex align-items-center">
                         <h2>All Questions</h2>
                         <div class="ml-auto">
                             <a href="{{ route('questions.create') }}" class="btn btn-outline-secondary">Ask Question</a>
                         </div>
                     </div>
+=======
+                    <div class="d-flex">
+                        <h2>All Questions</h2>
+                        <div class="ml-auto">
+                            <a href="{{ route('questions.create') }}" class="btn btn-outline-primary">Ask Question</a>
+                        </div>
+                    </div>
+
+>>>>>>> adding_more_info
                 </div>
 
                 <div class="card-body">
+                    @include('layouts._messages')
                    @foreach ($questions as $question)
                        <div class="media">
                            <div class="d-flex flex-column counters">
@@ -29,7 +40,27 @@
                                 </div>
                            </div>
                            <div class="media-body">
+<<<<<<< HEAD
                                <h3 class="mt-0" href="{{ $question->url }}">{{ $question->title }}</h3>
+=======
+                               <div class="d-flex align-items-center">
+                                    <h3 class="mt-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
+                                    <div class="ml-auto">
+                                        @can('update', $question)
+                                            <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">Edit</a>
+                                        @endcan
+                                        @can('delete', $question)
+                                            <form class="form-delete" method="POST" action="{{ route('questions.destroy', $question->id) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                            </form>
+                                        @endcan
+
+                                    </div>
+                               </div>
+>>>>>>> adding_more_info
                                <p class="lead">
                                    Asked by <a href="{{ $question->user->url }}">{{ $question->user->name }}</a>
                                    <small class="text-muted">{{ $question->created_date }}</small>

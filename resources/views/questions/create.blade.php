@@ -16,6 +16,7 @@
 
                 <div class="card-body">
                     <form action="{{ route('questions.store') }} " method="POST">
+<<<<<<< HEAD
                         @csrf
                         <div class="form-group">
                             <label for="question-title">Question Title</label>
@@ -40,6 +41,9 @@
                         <div class="form-group">
                             <button type="submit" class="btn btn-outline-primary btn-lg">Ask question</button>
                         </div>
+=======
+                        @include('questions._form', ['buttonText' => "Ask Question"])
+>>>>>>> adding_more_info
                     </form>
 
                 </div>
