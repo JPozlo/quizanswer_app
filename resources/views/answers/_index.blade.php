@@ -19,10 +19,22 @@
                                 {{-- <i class="fas fa-caret-down fa-3x"></i> --}}
                                 <img src="/svg/open-iconic/svg/caret-bottom.svg" alt="icon name">
                             </a>
-                            <a href="" title="Mark as best" class="{{ $answer->status }} mt-2">
-                                {{-- <i class="fas fa-star fa-3x"></i> fontawesome doesn't work --}}
-                                <img src="/svg/open-iconic/svg/check.svg" alt="icon name">
-                            </a>
+                            @can('accept', $answer)
+                                <a href="" title="Mark as best" class="{{ $answer->status }} mt-2" onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
+                                    {{-- <i class="fas fa-star fa-3x"></i> fontawesome doesn't work --}}
+                                    <img src="/svg/open-iconic/svg/check.svg" alt="icon name">
+                                </a>
+                                <form action="{{ route('answers.accept', $answer->id) }}" id="accept-answer-{{ $answer->id }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            @else
+                                @if ($answer->is_best)
+                                <a href="" title="The quiz owner accepted this as best" class="{{ $answer->status }} mt-2" onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
+                                    <img src="/svg/open-iconic/svg/check.svg" alt="icon name">
+                                </a>
+                                @endif
+                            @endcan
+
                         </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
