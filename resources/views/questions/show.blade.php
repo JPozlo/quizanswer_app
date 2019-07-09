@@ -29,11 +29,20 @@
                                     {{-- <i class="fas fa-caret-down fa-3x"></i> --}}
                                     <img src="/svg/open-iconic/svg/caret-bottom.svg" alt="icon name">
                                 </a>
-                                <a href="" title="Mark as favorite" class="favorite mt-2">
+                                <a href="" title="Mark as favorite"
+                                   class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }} "
+                                   onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();"
+                                   >
                                     {{-- <i class="fas fa-star fa-3x"></i> fontawesome doesn't work --}}
                                     <img src="/svg/open-iconic/svg/star.svg" alt="icon name">
-                                    <span class="favorites-count">123</span>
+                                    <span class="favorites-count">{{ $question->favorites_count }}</span>
                                 </a>
+                                <form action="/questions/{{ $question->id }}/favorites" id="favorite-question-{{ $answer->id }}" method="POST" style="display: none;">
+                                    @csrf
+                                    @if ($question->is_favorited)
+                                        @method('DELETE')
+                                    @endif
+                                </form>
                             </div>
                             <div class="media-body">
                                 {{-- {{ $question->body }} --}}
