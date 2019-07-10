@@ -10,15 +10,33 @@
                 @foreach ($answers as $answer)
                     <div class="media">
                         <div class="d-flex flex-column vote-controls">
-                            <a href="" title="This answer is helpful" class="vote-up">
+
+                            <a href="" title="This quiz is helpful"
+                                class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault(); document.getElementById('up-vote-question-{{ $question->id }}').submit();"
+                                >
                                     {{-- <i class="fas fa-caret-up fa-3x"></i> --}}
                                 <img src="/svg/open-iconic/svg/caret-top.svg" alt="icon name">
                             </a>
-                            <span class="votes-count">12230</span>
-                            <a href="" title="This answer doesn't help" class="vote-down off">
+                            <form action="/questions/{{ $question->id }}/vote" id="up-vote-question-{{ $question->id }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+
+                            <span class="votes-count">{{ $question->votes_count }}</span>
+
+                            <a href="" title="This quiz doesn't help"
+                                class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                                onclick="event.preventDefault(); document.getElementById('down-vote-question-{{ $question->id }}').submit();"
+                                >
                                 {{-- <i class="fas fa-caret-down fa-3x"></i> --}}
                                 <img src="/svg/open-iconic/svg/caret-bottom.svg" alt="icon name">
                             </a>
+                            <form action="/questions/{{ $question->id }}/vote" id="down-vote-question-{{ $question->id }}" method="POST" style="display: none;">
+                                @csrf
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
+
                             @can('accept', $answer)
                                 <a href="" title="Mark as best" class="{{ $answer->status }} mt-2" onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();">
                                     {{-- <i class="fas fa-star fa-3x"></i> fontawesome doesn't work --}}

@@ -20,15 +20,33 @@
 
                         <div class="media">
                             <div class="d-flex flex-column vote-controls">
-                                <a href="" title="This quiz is helpful" class="vote-up">
+
+                                <a href="" title="This quiz is helpful"
+                                   class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                                   onclick="event.preventDefault(); document.getElementById('up-vote-question-{{ $question->id }}').submit();"
+                                 >
                                      {{-- <i class="fas fa-caret-up fa-3x"></i> --}}
                                     <img src="/svg/open-iconic/svg/caret-top.svg" alt="icon name">
                                 </a>
-                                <span class="votes-count">12230</span>
-                                <a href="" title="This quiz doesn't help" class="vote-down off">
+                                <form action="/questions/{{ $question->id }}/vote" id="up-vote-question-{{ $question->id }}" method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="vote" value="1">
+                                </form>
+
+                                <span class="votes-count">{{ $question->votes_count }}</span>
+
+                                <a href="" title="This quiz doesn't help"
+                                   class="vote-down {{ Auth::guest() ? 'off' : '' }}"
+                                   onclick="event.preventDefault(); document.getElementById('down-vote-question-{{ $question->id }}').submit();"
+                                   >
                                     {{-- <i class="fas fa-caret-down fa-3x"></i> --}}
                                     <img src="/svg/open-iconic/svg/caret-bottom.svg" alt="icon name">
                                 </a>
+                                <form action="/questions/{{ $question->id }}/vote" id="down-vote-question-{{ $question->id }}" method="POST" style="display: none;">
+                                    @csrf
+                                    <input type="hidden" name="vote" value="-1">
+                                </form>
+
                                 <a href="" title="Mark as favorite"
                                    class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '') }} "
                                    onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();"
@@ -37,12 +55,13 @@
                                     <img src="/svg/open-iconic/svg/star.svg" alt="icon name">
                                     <span class="favorites-count">{{ $question->favorites_count }}</span>
                                 </a>
-                                <form action="/questions/{{ $question->id }}/favorites" id="favorite-question-{{ $answer->id }}" method="POST" style="display: none;">
+                                <form action="/questions/{{ $question->id }}/favorites" id="favorite-question-{{ $question->id }}" method="POST" style="display: none;">
                                     @csrf
                                     @if ($question->is_favorited)
                                         @method('DELETE')
                                     @endif
                                 </form>
+
                             </div>
                             <div class="media-body">
                                 {{-- {{ $question->body }} --}}
